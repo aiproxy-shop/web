@@ -1,0 +1,73 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content'
+import MainLayout from '../layouts/MainLayout.astro'
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages')
+  return pages.map((page) => ({
+    params: { slug: page.id },
+    props: page,
+  }))
+}
+type Props = CollectionEntry<'pages'>
+
+const page = Astro.props
+const { Content } = await render(page)
+---
+
+<MainLayout>
+  <div class="content">
+    <Content />
+  </div>
+</MainLayout>
+
+<style lang="scss" is:global>
+  .content {
+    max-width: 48rem;
+    margin: 0 auto;
+    line-height: 1.5;
+    padding: 1rem 0;
+  }
+
+  .content {
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin: 1.75rem 0;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      margin: 1rem 0;
+    }
+
+    li {
+      margin-bottom: 1rem;
+      margin-left: 1rem;
+    }
+
+    hr {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 48rem) {
+    .content {
+      padding: 1rem;
+    }
+  }
+</style>

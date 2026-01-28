@@ -1,0 +1,152 @@
+---
+import MainLayout from '../layouts/MainLayout.astro'
+import { GlobeIcon, ZapIcon, ShieldCheckIcon } from '@lucide/astro'
+---
+
+<MainLayout>
+  <div class="hero">
+    <div class="hero_wrapper">
+      <h2 class="hero_title font-bold">让好用的 AI 模型触手可及。</h2>
+      <p class="hero_description">
+        无需复杂网络环境，一个账户即可畅调全球顶尖模型。AIProxy Shop
+        提供安全透明的额度管理与极速响应的转发通道，助您快速开启智能创作之旅。
+      </p>
+
+      <div>
+        <a class="hero_action" href="https://app.aiproxy.shop">马上开始</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="features_wrapper">
+      <div class="feature">
+        <div class="feature_title">
+          <GlobeIcon />
+          <div>聚合接口，一键切换</div>
+        </div>
+        <div class="feature_description">
+          全场景 API 支持。一个账户畅调 OpenAI, Gemini, Grok
+          等全球主流模型，告别多平台维护烦恼。
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature_title">
+          <ZapIcon />
+          <div>极速中转，国内直连</div>
+        </div>
+
+        <div class="feature_description">
+          100% 兼容原生接口。 毫秒级延迟响应，国内环境直连，只需修改 Base URL
+          即可秒速无缝接入。
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature_title">
+          <ShieldCheckIcon />
+          <div>额度隔离，安全透明</div>
+        </div>
+
+        <div class="feature_description">
+          支持多 Key 独立管理。配合可视化账单看板，每一分消耗都清晰透明。
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<style lang="scss" is:global>
+  .hero {
+    display: flex;
+    padding: 4rem 1rem;
+    border: 1px solid #eee;
+    border-width: 0px 0px 1px 0px;
+  }
+
+  .hero_wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    min-width: 0;
+    flex: 1;
+    margin: 0 auto;
+  }
+
+  .hero_title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero_description {
+    max-width: 40rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero_action {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border: 1px solid var(--primary-color);
+    outline: none;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+  }
+
+  .features {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .features_wrapper {
+    max-width: 64rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .feature {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+    flex: 1;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-width: 0px 1px 0px 1px;
+    height: 16rem;
+    &:not(:first-child) {
+      border-left: 0px;
+    }
+
+    .feature_title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature_description {
+      line-height: 1.5;
+    }
+  }
+
+  @media screen and (max-width: 48rem) {
+    .features_wrapper {
+      flex-direction: column;
+    }
+    .feature {
+      border-width: 1px 0px 1px 0px;
+      border-top: 0px;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,187 @@
+---
+import '../styles/global.css'
+import BaseHead from '../components/BaseHead.astro'
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
+import Footer from '../components/Footer.astro'
+import DocsHeader from '../components/DocsHeader.astro'
+import { MenuIcon } from '@lucide/astro'
+
+type Props = {
+  title?: string
+  description?: string
+}
+
+const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props
+
+const sideConfig = {
+  paths: [
+    {
+      label: '开始使用',
+      children: [
+        {
+          label: '开始',
+          path: '/docs/get-started',
+        },
+      ],
+    },
+  ],
+}
+
+const pathname = Astro.url.pathname
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={`AIPorxy Shop - ${title}`} description={description} />
+  </head>
+  <body>
+    <DocsHeader />
+    <main class="pt-16 border-b border-border">
+      <div class="sticky top-16 z-10 bg-background w-full">
+        <div
+          class:list={[
+            'w-full px-4 py-2 block border-b border-border',
+            'md:hidden',
+          ]}
+        >
+          <button id="menu" data-role="menu">
+            <MenuIcon class="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-row h-full">
+        <aside
+          id="sider"
+          class:list={[
+            'fixed top-0 left-0 h-screen z-999 -translate-x-full md:translate-x-0 bg-background shrink-0 w-64 mr-8 border-r border-border py-4',
+            'md:sticky md:top-16 md:z-0 transition-transform md:transition-none',
+          ]}
+        >
+          <div class:list={['block mb-10 px-4', 'md:hidden']}>
+            <img class="h-10 w-auto" src="/logo.svg" alt="AIProxy Shop" />
+          </div>
+          {
+            sideConfig.paths.map((path) => (
+              <div>
+                <div class="text-sm font-bold mb-2 px-4">{path.label}</div>
+                {path.children.map((p) => (
+                  <a
+                    class:list={[
+                      'block w-full user-select-none cursor-pointer py-2 px-4 transition-colors',
+                      pathname === p.path
+                        ? 'bg-primary/20 text-primary'
+                        : 'hover:bg-muted',
+                    ]}
+                    href={p.path}
+                  >
+                    {p.label}
+                  </a>
+                ))}
+              </div>
+            ))
+          }
+        </aside>
+        <article class="min-w-0 flex-1 py-4 px-4">
+          <div class="markdown max-w-3xl mx-auto">
+            <slot />
+          </div>
+        </article>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<script>
+  const menu = document.getElementById('menu')
+  const sider = document.getElementById('sider')
+  const siderMask = document.getElementById('sider-mask')
+  const siderCloseBtn = document.getElementById('sider-close-btn')
+
+  if (menu && sider && siderMask && siderCloseBtn) {
+    menu.addEventListener('click', () => {
+      sider.classList.remove('-translate-x-full')
+      sider.classList.add('translate-x-0')
+      siderMask.classList.remove('hidden')
+      siderMask.classList.add('block')
+    })
+
+    siderCloseBtn.addEventListener('click', () => {
+      sider.classList.remove('translate-x-0')
+      sider.classList.add('-translate-x-full')
+      siderMask.classList.remove('block')
+      siderMask.classList.add('hidden')
+    })
+  }
+</script>
+
+<style is:global lang="scss">
+  .markdown {
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+
+    h4 {
+      font-size: 1.125rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+
+    p {
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    hr {
+      color: var(--color-border);
+      margin: 2rem 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-radius: 0.25rem;
+      border: 1px solid var(--color-border);
+    }
+
+    tr td,
+    tr th {
+      padding: 1rem;
+      border: 1px solid var(--color-border);
+    }
+
+    code {
+      font-family: var(--font-mono);
+      padding: 2px 5px;
+      background-color: rgb(var(--gray-light));
+      border-radius: 2px;
+    }
+    pre {
+      padding: 1.5em;
+      border-radius: 8px;
+    }
+
+    pre code {
+      font-size: 0.75rem;
+      font-weight: normal;
+    }
+
+    code {
+      font-size: 0.875rem;
+      font-weight: normal;
+    }
+  }
+</style>

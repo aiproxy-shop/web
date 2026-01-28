@@ -1,0 +1,36 @@
+---
+const today = new Date()
+---
+
+<footer>
+  <div>&copy; {today.getFullYear()} AIProxy Shop. 版权所有</div>
+  <div class="links">
+    <a class="link" href="/terms">用户服务协议</a>
+    <div class="link-divider"></div>
+    <a class="link" href="/privacy">隐私政策</a>
+  </div>
+</footer>
+<style>
+  footer {
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .link-divider {
+    height: 1rem;
+    width: 1px;
+    background-color: currentColor;
+  }
+
+  .link {
+    padding: 0 1rem;
+  }
+</style>
