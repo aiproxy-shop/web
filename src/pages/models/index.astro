@@ -1,0 +1,55 @@
+---
+import { getModels } from '../../api/models'
+import MainLayout from '../../layouts/MainLayout.astro'
+import _ from 'lodash'
+const models = await getModels()
+
+const modelsGroup = _.groupBy(models, 'ownedBy')
+
+const modelOwnedBys = ['deepseek', 'zai', 'google', 'anthropic', 'openai']
+---
+
+<MainLayout title="模型列表">
+  <main class="max-w-5xl mx-auto p-4">
+    <section class="flex flex-col space-y-6">
+      {
+        modelOwnedBys.map((ownedBy) => (
+          <div>
+            <div class="text-xl font-bold mb-4 capitalize">{ownedBy}</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {modelsGroup[ownedBy]?.map((model) => (
+                <a
+                  href={`/models/${model.id}`}
+                  class="flex items-center space-x-4 p-4 border border-border cursor-pointer hover:bg-muted/30"
+                >
+                  <div class="flex items-center justify-center w-16 h-16 rounded bg-muted">
+                    <img
+                      class="w-6 h-6"
+                      src={`/imgs/${model.ownedBy}.svg`}
+                      alt={model.ownedBy}
+                    />
+                  </div>
+                  <div class="h-16">
+                    <div class="text-lg font-bold">{model.name}</div>
+
+                    <div class="flex items-center space-x-2 mt-2">
+                      <div class="py-1 px-2 text-xs border border-border rounded">
+                        <span>最大输出</span>
+                        <span>{(model.maxTokens / 1000).toFixed(0)}K</span>
+                      </div>
+
+                      <div class="py-1 px-2 text-xs border border-border rounded">
+                        <span>上下文</span>
+                        <span>{(model.contextWindow / 1000).toFixed(0)}K</span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </section>
+  </main>
+</MainLayout>

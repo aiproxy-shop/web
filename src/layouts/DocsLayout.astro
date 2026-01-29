@@ -4,7 +4,7 @@ import BaseHead from '../components/BaseHead.astro'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import Footer from '../components/Footer.astro'
 import DocsHeader from '../components/DocsHeader.astro'
-import { MenuIcon } from '@lucide/astro'
+import { MenuIcon, XIcon } from '@lucide/astro'
 
 type Props = {
   title?: string
@@ -90,6 +90,13 @@ const pathname = Astro.url.pathname
       </div>
     </main>
     <Footer />
+
+    <div
+      id="sider-mask"
+      class="fixed top-0 left-0 z-99 hidden md:hidden w-screen h-screen bg-black/75 backdrop-blur-sm"
+    >
+      <XIcon id="sider-close-btn" class="absolute top-4 right-4 text-primary" />
+    </div>
   </body>
 </html>
 

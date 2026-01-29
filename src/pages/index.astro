@@ -12,8 +12,24 @@ import { GlobeIcon, ZapIcon, ShieldCheckIcon } from '@lucide/astro'
         提供安全透明的额度管理与极速响应的转发通道，助您快速开启智能创作之旅。
       </p>
 
-      <div>
+      <div class="flex items-center space-x-4">
         <a class="hero_action" href="https://app.aiproxy.shop">马上开始</a>
+
+        <a
+          href="/models"
+          class="bg-background hover:bg-muted inline-flex border border-border py-4 px-6 rounded"
+        >
+          模型列表
+          <div class="flex items-center -space-x-2 ml-2">
+            {
+              ['deepseek', 'zai', 'minimax'].map((ownedBy) => (
+                <div class="w-6 h-6 p-0.5 border border-border rounded-full bg-background">
+                  <img class="w-full h-full" src={`/imgs/${ownedBy}.svg`} />
+                </div>
+              ))
+            }
+          </div>
+        </a>
       </div>
     </div>
   </div>
