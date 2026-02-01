@@ -24,7 +24,11 @@ import { GlobeIcon, ZapIcon, ShieldCheckIcon } from '@lucide/astro'
             {
               ['deepseek', 'zai', 'minimax'].map((ownedBy) => (
                 <div class="w-6 h-6 p-0.5 border border-border rounded-full bg-background">
-                  <img class="w-full h-full" src={`/imgs/${ownedBy}.svg`} />
+                  <img
+                    class="w-full h-full"
+                    src={`/imgs/${ownedBy}.svg`}
+                    alt={ownedBy}
+                  />
                 </div>
               ))
             }
