@@ -47,4 +47,10 @@ body {
   --color-primary: oklch(45.7% 0.24 277.023);
   --color-secondary: oklch(48.8% 0.243 264.376);
   --color-muted: oklch(92.8% 0.006 264.531);
+
+  --color-alert-note: var(--color-blue-600);
+  --color-alert-tip: var(--color-emerald-600);
+  --color-alert-warning: var(--color-amber-600);
+  --color-alert-important: var(--color-purple-600);
+  --color-alert-caution: var(--color-red-600);
 }

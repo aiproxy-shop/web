@@ -20,6 +20,7 @@
     "astro-expressive-code": "^0.41.6",
     "lodash": "^4.17.23",
     "normalize.css": "^8.0.1",
+    "remark-github-alerts": "^0.1.1",
     "sharp": "^0.34.3",
     "tailwindcss": "^4.1.18"
   },

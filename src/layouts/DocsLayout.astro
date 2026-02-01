@@ -24,7 +24,11 @@ const sideConfig = {
         },
         {
           label: '创建 API Key',
-          path: '/docs/create-your-first-api-key',
+          path: '/docs/create-api-key',
+        },
+        {
+          label: '模型调用',
+          path: '/docs/model-calling-guide',
         },
       ],
     },
@@ -32,6 +36,7 @@ const sideConfig = {
 }
 
 const pathname = Astro.url.pathname
+const flatPathname = '/' + pathname.split('/').filter(Boolean).join('/')
 ---
 
 <!doctype html>
@@ -73,7 +78,7 @@ const pathname = Astro.url.pathname
                   <a
                     class:list={[
                       'block w-full user-select-none cursor-pointer py-2 px-4 transition-colors',
-                      pathname === p.path
+                      flatPathname === p.path
                         ? 'bg-primary/20 text-primary'
                         : 'hover:bg-muted',
                     ]}
@@ -172,6 +177,7 @@ const pathname = Astro.url.pathname
     tr th {
       padding: 1rem;
       border: 1px solid var(--color-border);
+      min-width: 100px;
     }
 
     code {
@@ -191,8 +197,66 @@ const pathname = Astro.url.pathname
     }
 
     code {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: normal;
+      font-family: var(--font-mono);
+    }
+
+    /* 选择所有 code，但排除 pre 内部的 code */
+    code:not(pre code) {
+      background-color: color-mix(
+        in oklab,
+        var(--color-primary) 10%,
+        transparent
+      );
+      color: var(--color-primary);
+      border-radius: 4px;
+    }
+
+    ul {
+      margin: 1rem 0;
+    }
+
+    li {
+      margin-left: 1rem;
+      list-style: disc;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--color-blue-600);
+    }
+
+    .markdown-alert {
+      margin-block: 1rem;
+      padding: 0.75rem 1rem;
+      border-inline-start-width: 4px;
+      border-radius: var(--radius-md);
+    }
+
+    .markdown-alert-tip {
+      border-color: var(--color-alert-tip);
+      background-color: color-mix(
+        in oklab,
+        var(--color-alert-tip) 10%,
+        transparent
+      );
+    }
+
+    .markdown-alert-important {
+      border-color: var(--color-alert-important);
+      background-color: color-mix(
+        in oklab,
+        var(--color-alert-important) 10%,
+        transparent
+      );
+    }
+    .markdown-alert-title {
+      opacity: 0;
+      height: 0px;
+      width: 0px;
+      overflow: hidden;
     }
   }
 </style>
