@@ -1,0 +1,23 @@
+---
+type Props = {
+  title: string
+  description: string
+  class?: string
+}
+
+const { title, description, class: className } = Astro.props
+---
+
+<div
+  class:list={[
+    'flex h-64 w-full flex-1 flex-col items-start justify-start border-x border-border px-4 py-4',
+    className,
+  ]}
+>
+  <div class="mb-5 flex items-center gap-2 text-xl font-bold">
+    <slot name="icon" />
+    <div>{title}</div>
+  </div>
+
+  <div class="leading-6">{description}</div>
+</div>
