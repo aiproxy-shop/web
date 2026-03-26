@@ -48,6 +48,7 @@ AIProxy Shop (https://aiproxy.shop) 尊重并保护您的个人隐私。本政�
 
 - **官方网站：** https://aiproxy.shop
 - **联系邮箱：** hi@aiproxy.shop
+- **QQ群：** 544739044
 
 ---
 
