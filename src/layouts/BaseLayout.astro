@@ -1,20 +1,96 @@
 ---
-import "../styles/global.css";
-import BaseHead from "../components/BaseHead.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import '../styles/global.css'
+import BaseHead from '../components/BaseHead.astro'
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 
 type Props = {
-  title?: string;
-  description?: string;
-};
+  title?: string
+  description?: string
+}
 
-const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
+const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props
 ---
 
 <!doctype html>
 <html lang="zh-CN">
   <head>
     <BaseHead title={`AIPorxy Shop - ${title}`} description={description} />
+    <script is:inline>
+      ;(() => {
+        const storageKey = 'aiproxy-theme'
+        const defaultTheme = 'system'
+        const validThemes = ['light', 'dark', 'system']
+        const root = document.documentElement
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+        const readPreference = () => {
+          try {
+            const storedPreference = localStorage.getItem(storageKey)
+            return validThemes.includes(storedPreference)
+              ? storedPreference
+              : defaultTheme
+          } catch {
+            return defaultTheme
+          }
+        }
+
+        const resolveTheme = (preference) => {
+          if (preference === 'system') {
+            return mediaQuery.matches ? 'dark' : 'light'
+          }
+
+          return preference
+        }
+
+        const applyTheme = (preference) => {
+          const resolvedTheme = resolveTheme(preference)
+          root.dataset.themePreference = preference
+          root.dataset.theme = resolvedTheme
+          root.style.colorScheme = resolvedTheme
+
+          window.dispatchEvent(
+            new CustomEvent('themechange', {
+              detail: { preference, resolvedTheme },
+            })
+          )
+        }
+
+        const setPreference = (preference) => {
+          if (!validThemes.includes(preference)) {
+            return
+          }
+
+          try {
+            localStorage.setItem(storageKey, preference)
+          } catch {
+            // Ignore storage write failures and keep theme applied in-memory.
+          }
+
+          applyTheme(preference)
+        }
+
+        window.siteTheme = {
+          getPreference: () => root.dataset.themePreference || readPreference(),
+          getResolvedTheme: () =>
+            root.dataset.theme || resolveTheme(readPreference()),
+          setPreference,
+        }
+
+        applyTheme(readPreference())
+
+        const handleSystemThemeChange = () => {
+          if (window.siteTheme.getPreference() === 'system') {
+            applyTheme('system')
+          }
+        }
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+          mediaQuery.addEventListener('change', handleSystemThemeChange)
+        } else if (typeof mediaQuery.addListener === 'function') {
+          mediaQuery.addListener(handleSystemThemeChange)
+        }
+      })()
+    </script>
   </head>
   <body>
     <slot />

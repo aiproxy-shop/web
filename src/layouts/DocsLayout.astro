@@ -1,10 +1,10 @@
 ---
-import '../styles/global.css'
-import BaseHead from '../components/BaseHead.astro'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import Footer from '../components/Footer.astro'
 import DocsHeader from '../components/DocsHeader.astro'
+import Logo from '../components/Logo.astro'
 import { MenuIcon, XIcon } from '@lucide/astro'
+import BaseLayout from './BaseLayout.astro'
 
 type Props = {
   title?: string
@@ -39,75 +39,69 @@ const pathname = Astro.url.pathname
 const flatPathname = '/' + pathname.split('/').filter(Boolean).join('/')
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <BaseHead title={`AIPorxy Shop - ${title}`} description={description} />
-  </head>
-  <body>
-    <DocsHeader />
-    <main class="pt-16 border-b border-border">
-      <div class="sticky top-16 z-10 bg-background w-full">
-        <div
-          class:list={[
-            'w-full px-4 py-2 block border-b border-border',
-            'md:hidden',
-          ]}
-        >
-          <button id="menu" data-role="menu">
-            <MenuIcon class="w-5 h-5" />
-          </button>
-        </div>
+<BaseLayout title={title} description={description}>
+  <DocsHeader />
+  <main class="pt-16 border-b border-border">
+    <div class="sticky top-16 z-10 bg-background w-full">
+      <div
+        class:list={[
+          'w-full px-4 py-2 block border-b border-border',
+          'md:hidden',
+        ]}
+      >
+        <button id="menu" data-role="menu">
+          <MenuIcon class="w-5 h-5" />
+        </button>
       </div>
-      <div class="flex flex-row h-full">
-        <aside
-          id="sider"
-          class:list={[
-            'fixed top-0 left-0 h-screen z-999 -translate-x-full md:translate-x-0 bg-background shrink-0 w-64 mr-8 border-r border-border py-4',
-            'md:sticky md:top-16 md:z-0 transition-transform md:transition-none',
-          ]}
-        >
-          <div class:list={['block mb-10 px-4', 'md:hidden']}>
-            <img class="h-10 w-auto" src="/logo.svg" alt="AIProxy Shop" />
-          </div>
-          {
-            sideConfig.paths.map((path) => (
-              <div>
-                <div class="text-sm font-bold mb-2 px-4">{path.label}</div>
-                {path.children.map((p) => (
-                  <a
-                    class:list={[
-                      'block w-full user-select-none cursor-pointer py-2 px-4 transition-colors',
-                      flatPathname === p.path
-                        ? 'bg-primary/20 text-primary'
-                        : 'hover:bg-muted',
-                    ]}
-                    href={p.path}
-                  >
-                    {p.label}
-                  </a>
-                ))}
-              </div>
-            ))
-          }
-        </aside>
-        <article class="min-w-0 flex-1 py-4 px-4">
-          <div class="markdown max-w-3xl mx-auto">
-            <slot />
-          </div>
-        </article>
-      </div>
-    </main>
-    <Footer />
-
-    <div
-      id="sider-mask"
-      class="fixed top-0 left-0 z-99 hidden md:hidden w-screen h-screen bg-black/75 backdrop-blur-sm"
-    >
-      <XIcon id="sider-close-btn" class="absolute top-4 right-4 text-primary" />
     </div>
-  </body>
-</html>
+    <div class="flex flex-row h-full">
+      <aside
+        id="sider"
+        class:list={[
+          'fixed top-0 left-0 h-screen z-999 -translate-x-full md:translate-x-0 bg-background shrink-0 w-64 mr-8 border-r border-border py-4',
+          'md:sticky md:top-16 md:z-0 transition-transform md:transition-none',
+        ]}
+      >
+        <div class:list={['block mb-10 px-4', 'md:hidden']}>
+          <Logo class="h-10 w-auto" />
+        </div>
+        {
+          sideConfig.paths.map((path) => (
+            <div>
+              <div class="text-sm font-bold mb-2 px-4">{path.label}</div>
+              {path.children.map((p) => (
+                <a
+                  class:list={[
+                    'block w-full user-select-none cursor-pointer py-2 px-4 transition-colors',
+                    flatPathname === p.path
+                      ? 'bg-primary/20 text-primary'
+                      : 'hover:bg-muted',
+                  ]}
+                  href={p.path}
+                >
+                  {p.label}
+                </a>
+              ))}
+            </div>
+          ))
+        }
+      </aside>
+      <article class="min-w-0 flex-1 py-4 px-4">
+        <div class="markdown max-w-3xl mx-auto">
+          <slot />
+        </div>
+      </article>
+    </div>
+  </main>
+  <Footer />
+
+  <div
+    id="sider-mask"
+    class="fixed top-0 left-0 z-99 hidden md:hidden w-screen h-screen bg-black/75 backdrop-blur-sm"
+  >
+    <XIcon id="sider-close-btn" class="absolute top-4 right-4 text-primary" />
+  </div>
+</BaseLayout>
 
 <script>
   const menu = document.getElementById('menu')
