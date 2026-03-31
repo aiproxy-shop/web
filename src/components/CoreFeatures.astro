@@ -1,0 +1,47 @@
+---
+import { GlobeIcon, ShieldCheckIcon, ZapIcon } from '@lucide/astro'
+import FeatureCard from './FeatureCard.astro'
+
+const features = [
+  {
+    title: '聚合接口，一键切换',
+    description:
+      '全场景 API 支持。一个账户畅调 OpenAI, Gemini, Grok 等全球主流模型，告别多平台维护烦恼。',
+    icon: GlobeIcon,
+  },
+  {
+    title: '极速中转，国内直连',
+    description:
+      '100% 兼容原生接口。 毫秒级延迟响应，国内环境直连，只需修改 Base URL 即可秒速无缝接入。',
+    icon: ZapIcon,
+  },
+  {
+    title: '额度隔离，安全透明',
+    description:
+      '支持多 Key 独立管理。配合可视化账单看板，每一分消耗都清晰透明。',
+    icon: ShieldCheckIcon,
+  },
+] as const
+---
+
+<section class="px-4 py-12">
+  <div class="mx-auto flex max-w-5xl flex-col gap-6">
+    <div class="mx-auto max-w-2xl text-center">
+      <h3 class="text-3xl font-bold">核心功能</h3>
+    </div>
+
+    <div class="overflow-hidden border border-border bg-border">
+      <div class="flex flex-col gap-px bg-border md:flex-row md:items-stretch">
+        {
+          features.map(({ icon: Icon, title, description }) => {
+            return (
+              <FeatureCard title={title} description={description}>
+                <Icon slot="icon" class="h-5 w-5" />
+              </FeatureCard>
+            )
+          })
+        }
+      </div>
+    </div>
+  </div>
+</section>

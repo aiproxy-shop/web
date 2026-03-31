@@ -1,5 +1,6 @@
 ---
 import { MonitorIcon, MoonIcon, SunIcon } from '@lucide/astro'
+import ThemeToggleButton from './ThemeToggleButton.astro'
 
 declare global {
   interface Window {
@@ -17,30 +18,21 @@ declare global {
     data-theme-toggle
   >
     <span class="sr-only">切换主题</span>
-    <button
-      type="button"
-      class="inline-flex cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-2 leading-none text-inherit transition-[background-color,color,transform] duration-150 ease-out hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_oklab,var(--primary-color)_70%,white)] data-[active=true]:bg-primary data-[active=true]:text-(--text-color)"
-      data-theme-option="light"
-      aria-label="切换到亮色主题"
-    >
-      <SunIcon class="h-4 w-4" aria-hidden="true" />
-    </button>
-    <button
-      type="button"
-      class="inline-flex cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-2 leading-none text-inherit transition-[background-color,color,transform] duration-150 ease-out hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_oklab,var(--primary-color)_70%,white)] data-[active=true]:bg-primary data-[active=true]:text-(--text-color)"
-      data-theme-option="dark"
-      aria-label="切换到暗色主题"
-    >
-      <MoonIcon class="h-4 w-4" aria-hidden="true" />
-    </button>
-    <button
-      type="button"
-      class="inline-flex cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-2 leading-none text-inherit transition-[background-color,color,transform] duration-150 ease-out hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_oklab,var(--primary-color)_70%,white)] data-[active=true]:bg-primary data-[active=true]:text-(--text-color)"
-      data-theme-option="system"
-      aria-label="跟随系统主题"
-    >
-      <MonitorIcon class="h-4 w-4" aria-hidden="true" />
-    </button>
+    <ThemeToggleButton
+      option="light"
+      ariaLabel="切换到亮色主题"
+      icon={SunIcon}
+    />
+    <ThemeToggleButton
+      option="dark"
+      ariaLabel="切换到暗色主题"
+      icon={MoonIcon}
+    />
+    <ThemeToggleButton
+      option="system"
+      ariaLabel="跟随系统主题"
+      icon={MonitorIcon}
+    />
   </div>
 
   <script>

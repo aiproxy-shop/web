@@ -1,15 +1,16 @@
 ---
+import CoreFeatures from '../components/CoreFeatures.astro'
 import MainLayout from '../layouts/MainLayout.astro'
-import FeatureCard from '../components/FeatureCard.astro'
 import ProviderGrid from '../components/ProviderGrid.astro'
-import { GlobeIcon, ZapIcon, ShieldCheckIcon } from '@lucide/astro'
 ---
 
 <MainLayout>
-  <div class="flex border-b border-border px-4 py-16">
-    <div class="mx-auto flex min-w-0 max-w-5xl flex-1 flex-col">
+  <div class="flex px-4 py-32">
+    <div
+      class="mx-auto flex min-w-0 max-w-5xl flex-1 flex-col items-center justify-center"
+    >
       <h2 class="mb-8 text-4xl font-bold md:text-5xl">
-        让好用的 AI 模型触手可及。
+        让好用的 AI 模型触手可及
       </h2>
       <p class="mb-6 max-w-160 leading-6 md:text-base md:leading-7">
         无需复杂网络环境，一个账户即可畅调全球顶尖模型。AIProxy Shop
@@ -18,8 +19,8 @@ import { GlobeIcon, ZapIcon, ShieldCheckIcon } from '@lucide/astro'
 
       <div class="flex items-center gap-4">
         <a
-          class="inline-block rounded-(--border-radius) border border-primary bg-primary px-8 py-4 text-background"
-          href="https://app.aiproxy.shop">马上开始</a
+          class="inline-block rounded-(--border-radius) border border-primary bg-primary px-8 py-4 text-primary-foreground"
+          href="https://app.aiproxy.shop">现在开始</a
         >
 
         <a
@@ -47,31 +48,5 @@ import { GlobeIcon, ZapIcon, ShieldCheckIcon } from '@lucide/astro'
 
   <ProviderGrid />
 
-  <div class="border-b border-border">
-    <div class="mx-auto flex max-w-5xl flex-col items-stretch md:flex-row">
-      <FeatureCard
-        title="聚合接口，一键切换"
-        description="全场景 API 支持。一个账户畅调 OpenAI, Gemini, Grok 等全球主流模型，告别多平台维护烦恼。"
-        class="md:first:border-l md:last:border-r"
-      >
-        <GlobeIcon slot="icon" class="h-5 w-5" />
-      </FeatureCard>
-
-      <FeatureCard
-        title="极速中转，国内直连"
-        description="100% 兼容原生接口。 毫秒级延迟响应，国内环境直连，只需修改 Base URL 即可秒速无缝接入。"
-        class="border-t md:border-t-0 md:border-l-0"
-      >
-        <ZapIcon slot="icon" class="h-5 w-5" />
-      </FeatureCard>
-
-      <FeatureCard
-        title="额度隔离，安全透明"
-        description="支持多 Key 独立管理。配合可视化账单看板，每一分消耗都清晰透明。"
-        class="border-t md:border-t-0 md:border-l-0 md:last:border-r"
-      >
-        <ShieldCheckIcon slot="icon" class="h-5 w-5" />
-      </FeatureCard>
-    </div>
-  </div>
+  <CoreFeatures />
 </MainLayout>
