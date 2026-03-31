@@ -1,28 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro'
 import FeatureCard from '../components/FeatureCard.astro'
+import ProviderGrid from '../components/ProviderGrid.astro'
 import { GlobeIcon, ZapIcon, ShieldCheckIcon } from '@lucide/astro'
-
-const iconIdsNeedingSurface = ['Kimi']
-
-const modelSuppliers = [
-  { name: '百炼', iconId: 'Bailian' },
-  { name: 'Vercel AI Gateway', iconId: 'Vercel' },
-  { name: 'Kimi', iconId: 'Kimi' },
-  { name: 'DeepInfra', iconId: 'DeepInfra' },
-  { name: 'DeepSeek', iconId: 'DeepSeek' },
-  { name: 'Minimax', iconId: 'Minimax' },
-  { name: 'Open Code', iconId: 'OpenCode' },
-  { name: 'OpenRouter', iconId: 'OpenRouter' },
-  { name: 'Baseten', iconId: 'Baseten' },
-  { name: 'Novita', iconId: 'Novita' },
-  { name: 'Fireworks', iconId: 'Fireworks' },
-  { name: 'Zeabur', iconId: 'Zeabur' },
-].map((supplier) => ({
-  ...supplier,
-  iconSrc: `/imgs/providers/${supplier.iconId}.svg`,
-  needsSurface: iconIdsNeedingSurface.includes(supplier.iconId),
-}))
 ---
 
 <MainLayout>
@@ -65,46 +45,7 @@ const modelSuppliers = [
     </div>
   </div>
 
-  <section class="border-b border-border px-4 py-12">
-    <div class="mx-auto flex max-w-5xl flex-col gap-6">
-      <div class="max-w-2xl text-center mx-auto">
-        <h3 class="text-3xl font-bold">模型供应商</h3>
-        <p class="mt-3 text-base leading-7 text-foreground/75">
-          覆盖国内外主流模型平台与聚合通道，支持你按场景灵活切换不同供应商能力。
-        </p>
-      </div>
-
-      <div class="overflow-hidden border border-border bg-border">
-        <div
-          class="grid grid-cols-2 gap-px bg-border sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-        >
-          {
-            modelSuppliers.map((supplier) => (
-              <div class="flex min-h-28 flex-col items-center justify-center bg-background px-4 py-6 text-center">
-                <div
-                  class:list={[
-                    'flex min-h-12 items-center justify-center px-3',
-                    supplier.needsSurface &&
-                      'h-14 w-14 rounded-md bg-slate-900 px-2 dark:bg-slate-100',
-                  ]}
-                >
-                  <img
-                    class="h-10 w-auto max-w-28 object-contain"
-                    src={supplier.iconSrc}
-                    alt={supplier.name}
-                    loading="lazy"
-                  />
-                </div>
-                <div class="mt-3 text-sm font-medium leading-5 text-foreground">
-                  {supplier.name}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </div>
-  </section>
+  <ProviderGrid />
 
   <div class="border-b border-border">
     <div class="mx-auto flex max-w-5xl flex-col items-stretch md:flex-row">

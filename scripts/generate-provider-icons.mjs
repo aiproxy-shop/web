@@ -4,7 +4,6 @@ import { pathToFileURL } from 'node:url'
 
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import toc from '@lobehub/icons/es/toc.js'
 
 const providers = [
   'Bailian',
@@ -21,16 +20,12 @@ const providers = [
   'Zeabur',
 ]
 
-const outputDir = path.resolve('public/imgs/providers')
-const iconMap = new Map(toc.map((item) => [item.id, item]))
+const outputDir = path.resolve('src/components/providers')
 
 const isSvgMarkup = (markup) => markup.trimStart().startsWith('<svg')
 
 const importIconComponent = async (iconId) => {
-  const iconMeta = iconMap.get(iconId)
-  const candidates = iconMeta?.param.hasColor
-    ? ['Color', 'Mono', 'Text', 'Avatar', 'Combine']
-    : ['Mono', 'Text', 'Color', 'Avatar', 'Combine']
+  const candidates = ['Mono']
 
   for (const variant of candidates) {
     const modulePath = path.resolve(
@@ -40,7 +35,10 @@ const importIconComponent = async (iconId) => {
     try {
       const module = await import(pathToFileURL(modulePath).href)
       if (module.default) {
-        return module.default
+        return {
+          component: module.default,
+          variant,
+        }
       }
     } catch {
       // Try the next available variant.
@@ -50,10 +48,23 @@ const importIconComponent = async (iconId) => {
   throw new Error(`No icon component found for ${iconId}`)
 }
 
+const toAstroComponentSource = (svg) => `${svg}\n`
+
+const toIndexSource = (iconIds) => {
+  const imports = iconIds
+    .map((iconId) => `import ${iconId} from './${iconId}.astro'`)
+    .join('\n')
+
+  const entries = iconIds.map((iconId) => `  ${iconId},`).join('\n')
+
+  return `${imports}\n\nexport const providerIcons = {\n${entries}\n}\n`
+}
+
 await mkdir(outputDir, { recursive: true })
 
 for (const iconId of providers) {
-  const IconComponent = await importIconComponent(iconId)
+  const { component: IconComponent, variant } =
+    await importIconComponent(iconId)
   const svg = renderToStaticMarkup(
     React.createElement(IconComponent, { size: 24 })
   )
@@ -62,8 +73,11 @@ for (const iconId of providers) {
     throw new Error(`Generated markup for ${iconId} is not an svg element`)
   }
 
-  const filePath = path.join(outputDir, `${iconId}.svg`)
+  const filePath = path.join(outputDir, `${iconId}.astro`)
 
-  await writeFile(filePath, svg)
-  console.log(`Generated ${filePath}`)
+  await writeFile(filePath, toAstroComponentSource(svg))
+  console.log(`Generated ${filePath} from ${variant}`)
 }
+
+await writeFile(path.join(outputDir, 'index.ts'), toIndexSource(providers))
+console.log(`Generated ${path.join(outputDir, 'index.ts')}`)
