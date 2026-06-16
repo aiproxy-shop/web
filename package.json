@@ -28,6 +28,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.23",
+    "prettier": "^3.8.4",
+    "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.97.2"
   }
 }
