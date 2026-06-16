@@ -27,6 +27,7 @@
     'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
   font-family: var(--font-sans);
+  font-size: 15px;
   --background: 255, 255, 255;
   --border: 238, 238, 238;
   --foreground: 51, 51, 51;
